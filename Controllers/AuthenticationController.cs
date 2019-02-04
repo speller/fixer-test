@@ -79,5 +79,20 @@ namespace FixerTest.Controllers
             }
         }
 
+        // POST: /Authentication/AjaxLogin
+        [HttpPost]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        public async Task<IActionResult> AjaxLogout()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new ObjectResult(new {success = false, reason = "not logged in"});
+            }
+
+            await _signInManager.SignOutAsync();
+            return new OkObjectResult(new {success = true});
+        }
+
     }
 }

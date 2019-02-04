@@ -75,6 +75,9 @@ namespace FixerTest
                 routes.MapRoute(
                     name: "ajax-login",
                     template: "{controller=Authentication}/{action=AjaxLogin}");
+                routes.MapRoute(
+                    name: "ajax-logout",
+                    template: "{controller=Authentication}/{action=AjaxLogout}");
             });
         }
     }
