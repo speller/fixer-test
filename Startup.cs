@@ -33,7 +33,13 @@ namespace FixerTest
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("SampleConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<IdentityUser>(o => {
+                        o.Password.RequireDigit = false;
+                        o.Password.RequireLowercase = false;
+                        o.Password.RequireUppercase = false;
+                        o.Password.RequireNonAlphanumeric = false;
+                        o.Password.RequiredLength = 3;
+                    })
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -51,11 +57,8 @@ namespace FixerTest
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -66,6 +69,12 @@ namespace FixerTest
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "ajax-register",
+                    template: "{controller=Authentication}/{action=AjaxRegister}");
+                routes.MapRoute(
+                    name: "ajax-login",
+                    template: "{controller=Authentication}/{action=AjaxLogin}");
             });
         }
     }
