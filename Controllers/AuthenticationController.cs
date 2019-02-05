@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using FixerTest.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace FixerTest.Controllers
     /**
      * Serve registration, login and logout ajax requests.
      */
+    [EnableCors("AllowAllPolicy")]
     public class AuthenticationController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;

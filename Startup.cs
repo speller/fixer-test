@@ -44,6 +44,12 @@ namespace FixerTest
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllPolicy",
+                    builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +88,8 @@ namespace FixerTest
                     name: "ajax-read-transactions",
                     template: "{controller=PropertyTransaction}/{action=ReadTransactions}");
             });
+
+//            app.UseCors(builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
         }
     }
 }

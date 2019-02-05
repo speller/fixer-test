@@ -7,6 +7,7 @@ import { all } from 'redux-saga/effects'
 import Root from './components/Root'
 import rootSagas from './components/Root/sagas'
 import rootReducers from './components/Root/reducers'
+import loginFormReducers from './components/LoginForm/reducers'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 
@@ -26,6 +27,7 @@ function Page(store) {
 // Initialize reducers and sagas for the app
 const reducers = {
   root: rootReducers,
+  loginForm: loginFormReducers,
 }
 const sagas = [].concat(rootSagas)
 

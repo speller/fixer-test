@@ -1,56 +1,63 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { ACTION_LOGIN, ACTION_LOGIN_FAIL, ACTION_LOGIN_SUCCESS } from './constants'
+import {
+  ACTION_LOGIN,
+  ACTION_LOGIN_FAIL,
+  ACTION_LOGIN_SUCCESS,
+  ACTION_REGISTER,
+  ACTION_REGISTER_FAIL,
+  ACTION_REGISTER_SUCCESS
+} from './constants'
 import axios from 'axios'
 import { putFailAction } from './utils'
+
+const BASE_URL = 'http://localhost:5000'
 
 function * loginWorker(action) {
   try {
     const response = yield call(
       axios,
       {
-        url: '',
-        baseURL: config.wpApiUrl,
-        method: httpMethod,
-        data: httpMethod === 'post' ? {...payload} : {},
-        params: httpMethod === 'get' ? {...payload} : {},
-        transformRequest: [(data, headers) => {
-          let body = []
-          for (const name in data) {
-            body.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]))
-          }
-          headers['Content-Type'] = 'application/x-www-form-urlencoded'
-          return body.join('&')
-        }],
-        headers: headers,
+        url: '/Authentication/AjaxLogin',
+        baseURL: BASE_URL,
+        method: 'post',
+        data: {...action.payload},
       }
     )
     const result = response.data
-    let r
-    if (isArray(result)) {
-      for (const resItem of result) {
-        if (resItem.err === 0) {
-          r = resItem
-          break
-        }
-      }
+    if (result && result.success) {
+      yield put({
+        type: ACTION_LOGIN_SUCCESS,
+      })
     } else {
-      r = result
+      yield putFailAction(ACTION_LOGIN_FAIL, {message: result.reason ?? 'unknown error'})
     }
-    if (!r) {
-      throw new Error('Can not find user profile')
-    }
-    yield put({
-      type: ACTION_LOGIN_SUCCESS,
-      payload: {
-        email: r.mail,
-        countryId: r.country_id,
-        id: r.id,
-        uniqueId: r.unique_id,
-        pmCompany: r.pm_company,
-      },
-    })
   } catch (e) {
     yield putFailAction(ACTION_LOGIN_FAIL, e)
+  }
+}
+
+
+function * registerWorker(action) {
+  try {
+    const response = yield call(
+      axios,
+      {
+        url: '/Authentication/AjaxRegister',
+        baseURL: BASE_URL,
+        method: 'post',
+        data: {...action.payload},
+      }
+    )
+    const result = response.data
+    if (result && result.success) {
+      yield put({
+        type: ACTION_REGISTER_SUCCESS,
+      })
+    } else {
+      yield putFailAction(ACTION_REGISTER_FAIL, {message: result.reason ?? 'unknown error'})
+    }
+  } catch (e) {
+    yield putFailAction(ACTION_REGISTER_FAIL, e)
   }
 }
 
@@ -58,7 +65,9 @@ function * loginWorker(action) {
 
 export default [
   function * () {
-    // register watchForLogin action worker
     yield takeLatest(ACTION_LOGIN, loginWorker)
+  },
+  function * () {
+    yield takeLatest(ACTION_REGISTER, registerWorker)
   },
 ]
