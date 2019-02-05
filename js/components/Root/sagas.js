@@ -1,8 +1,7 @@
-import {call, put, takeLatest} from 'redux-saga/effects'
-import {ACTION_LOGIN, ACTION_LOGIN_FAIL, ACTION_LOGIN_SUCCESS} from './constants'
+import { call, put, takeLatest } from 'redux-saga/effects'
+import { ACTION_LOGIN, ACTION_LOGIN_FAIL, ACTION_LOGIN_SUCCESS } from './constants'
 import axios from 'axios'
-import {putFailAction} from './utils'
-
+import { putFailAction } from './utils'
 
 function * loginWorker(action) {
   try {
@@ -60,6 +59,6 @@ function * loginWorker(action) {
 export default [
   function * () {
     // register watchForLogin action worker
-    yield takeLatest(ACTION_LOGIN, loadUserProfileWorker)
+    yield takeLatest(ACTION_LOGIN, loginWorker)
   },
 ]

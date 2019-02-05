@@ -4,6 +4,7 @@
   "author": "Alex Pravdin",
   "scripts": {
     "dev-start": "webpack-dev-server --mode development --env.APP_TARGET=dev",
+    "dev-build": "webpack --mode development --env.APP_TARGET=dev",
     "build": "webpack --mode production --env.APP_TARGET=prod",
     "build-artifact": "webpack --mode production  --env.APP_TARGET=prod && rm -f artifact.zip && rm -rf artifact && mkdir artifact && for file in `cat artifact.lst`; do cp --parents \"$file\" artifact ; done && (cd artifact && zip -r ../artifact.zip *) && rm -rf artifact",
     "build-artifact-staging": "webpack --mode production  --env.APP_TARGET=staging && rm -f artifact.zip && rm -rf artifact && mkdir artifact && for file in `cat artifact.lst`; do cp --parents \"$file\" artifact ; done && (cd artifact && zip -r ../artifact.zip *) && rm -rf artifact"
@@ -14,23 +15,17 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@material-ui/core": "^3.9.1",
     "axios": "^0.18.0",
-    "classnames": "^2.2.6",
-    "cookie": "^0.3.1",
-    "cookie-parser": "^1.4.3",
     "lodash-es": "^4.17.11",
     "prop-types": "^15.6.2",
-    "query-string": "^6.2.0",
     "react": "^16.7.0",
     "react-cookie": "^3.0.4",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.7.0",
     "react-meta-tags": "^0.7.2",
     "react-redux": "^6.0.0",
-    "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
-    "redux-saga": "^1.0.1",
-    "typeface-roboto": "^0.0.54"
+    "redux-saga": "^1.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

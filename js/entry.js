@@ -1,12 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
-import {applyMiddleware, combineReducers, compose, createStore} from 'redux'
+import { Provider } from 'react-redux'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import {all} from 'redux-saga/effects'
+import { all } from 'redux-saga/effects'
 import Root from './components/Root'
 import rootSagas from './components/Root/sagas'
 import rootReducers from './components/Root/reducers'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
+
+library.add(
+  faLock,
+)
 
 
 function Page(store) {

@@ -55,7 +55,7 @@ module.exports = (env, argv) => {
       inline: true,
       port: 8082,
       host: '0.0.0.0',
-      publicPath: '/wwwroot/build',
+      publicPath: '/build',
       historyApiFallback: true,
       contentBase: path.resolve(__dirname, 'wwwroot'),
       watchContentBase: true,
@@ -72,7 +72,7 @@ module.exports = (env, argv) => {
         {
           test: /\.scss$/,
           use: [
-            // 'style-loader', // Load styles from JS
+            'style-loader', // Load styles from JS
             // MiniCssExtractPlugin.loader, // Extract CSS into external file
             'css-loader', // Ability to import CSS in JS module
             'postcss-loader', // Add CSS refixes
