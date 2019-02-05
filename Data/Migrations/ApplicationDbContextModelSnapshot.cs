@@ -27,11 +27,21 @@ namespace FixerTest.Data.Migrations
                     b.Property<string>("BuildingYear")
                         .HasMaxLength(20);
 
+                    b.Property<int>("CityCode");
+
+                    b.Property<string>("CityName");
+
                     b.Property<string>("FloorPlan")
                         .HasMaxLength(20);
 
                     b.Property<string>("NearestStation")
                         .HasMaxLength(30);
+
+                    b.Property<int>("Period");
+
+                    b.Property<int>("PrefCode");
+
+                    b.Property<string>("PrefName");
 
                     b.Property<decimal>("TradePrice");
 

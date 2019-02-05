@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FixerTest.Controllers
 {
+    /**
+     * Serve registration, login and logout ajax requests.
+     */
     public class AuthenticationController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;

@@ -13,6 +13,9 @@ namespace FixerTest.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Period = table.Column<int>(nullable: false),
+                    PrefCode = table.Column<int>(nullable: false),
+                    CityCode = table.Column<int>(nullable: false),
                     NearestStation = table.Column<string>(maxLength: 30, nullable: true),
                     TradePrice = table.Column<decimal>(nullable: false),
                     FloorPlan = table.Column<string>(maxLength: 20, nullable: true),

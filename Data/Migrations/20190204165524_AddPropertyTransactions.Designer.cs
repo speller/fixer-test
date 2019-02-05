@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FixerTest.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190204150246_AddPropertyTransactions")]
+    [Migration("20190204165524_AddPropertyTransactions")]
     partial class AddPropertyTransactions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,11 +30,17 @@ namespace FixerTest.Data.Migrations
                     b.Property<string>("BuildingYear")
                         .HasMaxLength(20);
 
+                    b.Property<int>("CityCode");
+
                     b.Property<string>("FloorPlan")
                         .HasMaxLength(20);
 
                     b.Property<string>("NearestStation")
                         .HasMaxLength(30);
+
+                    b.Property<int>("Period");
+
+                    b.Property<int>("PrefCode");
 
                     b.Property<decimal>("TradePrice");
 
