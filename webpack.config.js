@@ -57,7 +57,7 @@ module.exports = (env, argv) => {
       host: '0.0.0.0',
       publicPath: '/wwwroot/build',
       historyApiFallback: true,
-      contentBase: __dirname,
+      contentBase: path.resolve(__dirname, 'wwwroot'),
       watchContentBase: true,
       disableHostCheck: true,
     },
