@@ -94,8 +94,8 @@ namespace FixerTest
                     name: "get-status",
                     template: "{controller=Authentication}/{action=GetLoginStatus}");
                 routes.MapRoute(
-                    name: "ajax-read-transactions",
-                    template: "{controller=PropertyTransaction}/{action=ReadTransactions}");
+                    name: "get-transactions",
+                    template: "{controller=PropertyTransaction}/{action=GetTransactions}");
             });
         }
     }

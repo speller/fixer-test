@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FixerTest.Data;
 using FixerTest.Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,6 +15,7 @@ namespace FixerTest.Controllers
     /**
      * Serve properties transaction data manipulation
      */
+    [EnableCors("AllowAllPolicy")]
     public class PropertyTransactionController
     {
         private readonly ApplicationDbContext _dbContext;
@@ -26,13 +27,12 @@ namespace FixerTest.Controllers
 
         // POST: /PropertyTransaction/ReadTransactions
         [HttpPost]
-        [AllowAnonymous]
         [Produces("application/json")]
-        public async Task<JsonResult> ReadTransactions([FromBody] PropertyTransactionFilter filter)
+        public async Task<JsonResult> GetTransactions([FromBody] PropertyTransactionFilter filter)
         {
             await FetchRemoteDataIfNeeded(filter.From, filter.To, filter.PrefCode, filter.CityCode);
             var rows = _dbContext.PropertyTransactions.Where(t => t.Period >= filter.From && t.Period <= filter.To);
-            return new JsonResult(rows); //OkObjectResult(rows.);
+            return new JsonResult(new {success = true, data = rows}); //OkObjectResult(rows.);
         }
         
         /**

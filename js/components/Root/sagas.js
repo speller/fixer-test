@@ -13,12 +13,11 @@ import {
   ACTION_REGISTER_FAIL,
   ACTION_REGISTER_SUCCESS,
   ACTION_SET_PAGE,
+  BASE_URL,
   PAGE_LOGIN
 } from './constants'
 import axios from 'axios'
 import { putFailAction } from './utils'
-
-const BASE_URL = 'http://localhost:5000'
 
 function * loginWorker(action) {
   try {

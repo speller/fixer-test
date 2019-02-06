@@ -6,6 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 import Root from './components/Root'
 import rootSagas from './components/Root/sagas'
+import mainPageSagas from './components/MainPage/sagas'
 import rootReducers from './components/Root/reducers'
 import loginFormReducers from './components/LoginForm/reducers'
 import mainPageReducers from './components/MainPage/reducers'
@@ -31,7 +32,7 @@ const reducers = {
   loginForm: loginFormReducers,
   mainPage: mainPageReducers,
 }
-const sagas = [].concat(rootSagas)
+const sagas = [].concat(rootSagas, mainPageSagas)
 
 
 // Create Redux store with all the enhancements
