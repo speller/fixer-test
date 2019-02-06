@@ -1,3 +1,5 @@
+import config from '../../config/config-APP_TARGET'
+
 export const PAGE_LOGIN = 'login'
 export const PAGE_REGISTER = 'register'
 export const PAGE_MAIN = 'main'
@@ -20,8 +22,4 @@ export const ACTION_REGISTER = 'ACTION_REGISTER'
 export const ACTION_REGISTER_SUCCESS = 'ACTION_REGISTER_SUCCESS'
 export const ACTION_REGISTER_FAIL = 'ACTION_REGISTER_FAIL'
 
-export const ACTION_GET_DATA = 'ACTION_GET_DATA'
-export const ACTION_GET_DATA_SUCCESS = 'ACTION_GET_DATA_SUCCESS'
-export const ACTION_GET_DATA_FAIL = 'ACTION_GET_DATA_FAIL'
-
-export const BASE_URL = 'http://localhost:5000'
+export const BASE_URL = config.api_url

@@ -5,9 +5,7 @@
   "scripts": {
     "dev-start": "webpack-dev-server --mode development --env.APP_TARGET=dev",
     "dev-build": "webpack --mode development --env.APP_TARGET=dev",
-    "build": "webpack --mode production --env.APP_TARGET=prod",
-    "build-artifact": "webpack --mode production  --env.APP_TARGET=prod && rm -f artifact.zip && rm -rf artifact && mkdir artifact && for file in `cat artifact.lst`; do cp --parents \"$file\" artifact ; done && (cd artifact && zip -r ../artifact.zip *) && rm -rf artifact",
-    "build-artifact-staging": "webpack --mode production  --env.APP_TARGET=staging && rm -f artifact.zip && rm -rf artifact && mkdir artifact && for file in `cat artifact.lst`; do cp --parents \"$file\" artifact ; done && (cd artifact && zip -r ../artifact.zip *) && rm -rf artifact"
+    "build": "webpack --mode production --env.APP_TARGET=prod"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.14",
@@ -61,5 +59,8 @@
     "webpack-dev-middleware": "^3.5.1",
     "webpack-dev-server": "^3.1.14",
     "webpack-hot-middleware": "^2.24.3"
+  },
+  "resolutions": {
+    "terser": "3.14.1"
   }
 }
