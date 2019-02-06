@@ -12,7 +12,8 @@ Was developed with JetBrains Rider.
 
 1. Install NodeJS and Yarn.
 2. Run `yarn install`.
-3. Run `npm run dev-start`. It will start frontend web server on local port `8082`
+3. Run `npm run dev-start`. It will start frontend web server on local port `8082`.
+4. Ensure `js/config/config-dev.json` contain valid base URL to the backend.
 
 ## How to use
 
