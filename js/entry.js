@@ -8,6 +8,7 @@ import Root from './components/Root'
 import rootSagas from './components/Root/sagas'
 import rootReducers from './components/Root/reducers'
 import loginFormReducers from './components/LoginForm/reducers'
+import mainPageReducers from './components/MainPage/reducers'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 
@@ -28,6 +29,7 @@ function Page(store) {
 const reducers = {
   root: rootReducers,
   loginForm: loginFormReducers,
+  mainPage: mainPageReducers,
 }
 const sagas = [].concat(rootSagas)
 

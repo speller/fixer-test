@@ -22,11 +22,27 @@ namespace FixerTest.Controllers
             _signInManager = signInManager;
         }
 
-        // POST: /Authentication/AjaxRegister
+        // GET: /Authentication/GetLoginStatus
+        [HttpGet]
+        [AllowAnonymous]
+        [Produces("application/json")]
+        public IActionResult GetLoginStatus()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return new ObjectResult(new {success = true, email = User.Identity.Name});
+            }
+            else
+            {
+                return new ObjectResult(new { success = false, reason = "not authenticated" });
+            }
+        }
+
+        // POST: /Authentication/Register
         [HttpPost]
         [AllowAnonymous]
         [Produces("application/json")]
-        public async Task<IActionResult> AjaxRegister([FromBody] RegisterLoginRequest loginRequest)
+        public async Task<IActionResult> Register([FromBody] RegisterLoginRequest loginRequest)
         {
             var email = loginRequest.Email;
             var password = loginRequest.Password;
@@ -49,7 +65,7 @@ namespace FixerTest.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, true);
-                    return new OkObjectResult(new {success = true, id = user.Id});
+                    return new ObjectResult(new {success = true, email = user.Email});
                 }
                 else
                 {
@@ -58,18 +74,18 @@ namespace FixerTest.Controllers
             }
         }
 
-        // POST: /Authentication/AjaxLogin
+        // POST: /Authentication/Login
         [HttpPost]
         [AllowAnonymous]
         [Produces("application/json")]
-        public async Task<IActionResult> AjaxLogin([FromBody] RegisterLoginRequest loginRequest)
+        public async Task<IActionResult> Login([FromBody] RegisterLoginRequest loginRequest)
         {
             var email = loginRequest.Email;
             var password = loginRequest.Password;
             
             if (User.Identity.IsAuthenticated)
             {
-                return new ObjectResult(new {success = true, reason = "already logged in"});
+                return new ObjectResult(new {success = true, reason = "already logged in", email = email});
             }
 
             var user = await _userManager.FindByEmailAsync(email);
@@ -79,16 +95,16 @@ namespace FixerTest.Controllers
             }
             else
             {
-                await _signInManager.SignInAsync(user, true);
-                return new OkObjectResult(new {success = true, id = user.Id});
+                await _signInManager.PasswordSignInAsync(user, password, true, false);
+                return new ObjectResult(new {success = true, email = user.Email});
             }
         }
 
-        // POST: /Authentication/AjaxLogin
+        // POST: /Authentication/Login
         [HttpPost]
         [AllowAnonymous]
         [Produces("application/json")]
-        public async Task<IActionResult> AjaxLogout()
+        public async Task<IActionResult> Logout()
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -96,8 +112,7 @@ namespace FixerTest.Controllers
             }
 
             await _signInManager.SignOutAsync();
-            return new OkObjectResult(new {success = true});
+            return new ObjectResult(new {success = true});
         }
-
     }
 }

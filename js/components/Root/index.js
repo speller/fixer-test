@@ -1,21 +1,49 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { AppBar, Button, CssBaseline, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, CssBaseline, LinearProgress, Toolbar, Typography } from '@material-ui/core'
 import './styles.scss'
 import LoginForm from '../LoginForm'
 import { PAGE_LOGIN, PAGE_MAIN, PAGE_REGISTER } from './constants'
-import { showLoginPage, showRegisterPage } from './actions'
+import { checkLoginStatus, logout, showLoginPage, showMainPage, showRegisterPage } from './actions'
 import { MODE_LOGIN, MODE_REGISTER } from '../LoginForm/constants'
+import MainPage from '../MainPage'
 
 class Root extends Component {
   
   static defaultProps = {
     page: PAGE_MAIN,
+    currentLogin: null,
+    shouldCheckLogin: true,
+    initialized: false,
+    loginCheckInProgress: false,
+    logoutInProgress: false,
   }
   
+  isInProgress() {
+    return this.props.loginCheckInProgress || this.props.logoutInProgress; 
+  }
+  
+  shouldCheckLogin() {
+    return this.props.shouldCheckLogin && !this.props.loginCheckInProgress
+  }
+  
+  canShowContent() {
+    return this.props.initialized;
+  }
+  
+  componentDidMount () {
+    if (this.shouldCheckLogin()) {
+      this.props.checkLoginStatus()
+    }
+  }
+
   render () {
     const props = this.props;
+    
+    const isInProgress = this.isInProgress() || props.shouldCheckLogin
+    const isLoggedIn = !!props.currentLogin
+    const canShowContent = this.canShowContent()
     
     return (
       <div className="app-root">
@@ -28,21 +56,48 @@ class Root extends Component {
             <Button className="main-link">
               Main Page
             </Button>
-            <Button color="primary" variant="outlined" className="login" onClick={props.showLoginPage}>
+            {!isLoggedIn && 
+            <Button 
+              color="primary" 
+              variant="outlined" 
+              className="login" 
+              onClick={props.showLoginPage}
+              disabled={isInProgress}
+            >
               Login
-            </Button>
-            <Button color="primary" variant="outlined" onClick={props.showRegisterPage}>
+            </Button>}
+            {!isLoggedIn && 
+            <Button 
+              color="primary" 
+              variant="outlined" 
+              onClick={props.showRegisterPage}
+              disabled={isInProgress}
+            >
               Register
-            </Button>
+            </Button>}
+            {isLoggedIn && 
+            <Button 
+              color="primary" 
+              variant="outlined" 
+              onClick={props.logout}
+              disabled={isInProgress}
+            >
+              {props.currentLogin} Logout
+            </Button>}
           </Toolbar>
         </AppBar>
+        {isInProgress &&
+        <LinearProgress />}
         <main className="layout">
-          {props.page === PAGE_REGISTER &&
+          {canShowContent && props.page === PAGE_REGISTER &&
             <LoginForm mode={MODE_REGISTER}/>
-          }      
-          {props.page === PAGE_LOGIN &&
+          }
+          {canShowContent && props.page === PAGE_LOGIN &&
             <LoginForm mode={MODE_LOGIN}/>
-          }      
+          }
+          {canShowContent && props.page === PAGE_MAIN && isLoggedIn &&
+            <MainPage />
+          }
         </main>
       </div>
     )
@@ -60,6 +115,9 @@ export default connect(
     return {
       showLoginPage: () => dispatch(showLoginPage()),
       showRegisterPage: () => dispatch(showRegisterPage()),
+      showMainPage: () => dispatch(showMainPage()),
+      checkLoginStatus: () => dispatch(checkLoginStatus()),
+      logout: () => dispatch(logout()),
     }
   },
 )(Root)

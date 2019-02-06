@@ -48,7 +48,13 @@ namespace FixerTest
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllPolicy",
-                    builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+                    builder => 
+                        builder
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .WithOrigins("http://localhost:8082", "http://testdomain")
+                            .AllowCredentials()
+                        );
             });
         }
 
@@ -76,20 +82,21 @@ namespace FixerTest
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
-                    name: "ajax-register",
-                    template: "{controller=Authentication}/{action=AjaxRegister}");
+                    name: "register",
+                    template: "{controller=Authentication}/{action=Register}");
                 routes.MapRoute(
-                    name: "ajax-login",
-                    template: "{controller=Authentication}/{action=AjaxLogin}");
+                    name: "login",
+                    template: "{controller=Authentication}/{action=Login}");
                 routes.MapRoute(
-                    name: "ajax-logout",
-                    template: "{controller=Authentication}/{action=AjaxLogout}");
+                    name: "logout",
+                    template: "{controller=Authentication}/{action=Logout}");
+                routes.MapRoute(
+                    name: "get-status",
+                    template: "{controller=Authentication}/{action=GetLoginStatus}");
                 routes.MapRoute(
                     name: "ajax-read-transactions",
                     template: "{controller=PropertyTransaction}/{action=ReadTransactions}");
             });
-
-//            app.UseCors(builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
         }
     }
 }
