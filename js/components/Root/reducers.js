@@ -71,7 +71,6 @@ export default function(state = {}, action) {
       }
 
     case ACTION_CHECK_LOGIN_FAIL:
-      alert("Check login failed: " + action.payload.message)
       return {
         ...state,
         shouldCheckLogin: false,
