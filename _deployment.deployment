@@ -1,3 +1,0 @@
-[config]
-project = FixerTest.csproj
-command = bash compile-react.sh
